@@ -13,3 +13,4 @@ __all__ = [
         "TextPreprocessor",
         "load_preprocessor_from_config",
 ]
+"""Legacy Sentiment Project ${dir} package."""
