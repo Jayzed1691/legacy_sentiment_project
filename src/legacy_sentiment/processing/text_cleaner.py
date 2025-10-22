@@ -1,83 +1,86 @@
-#!/usr/bin/env python3
-
 # text_cleaner.py
 
-import re
-import spacy
-from typing import Dict, List, Any, Tuple
+from typing import List, Set, Optional
+from data_types import Token
+import logging
 
-class TextCleaner:
-	def __init__(self, custom_named_entities: Dict[str, List[Dict[str, Any]]], 
-				mwe_entries: Dict[str, List[Dict[str, Any]]],
-				config: Dict[str, Any] = None):
-		self.custom_entities = self._extract_entities(custom_named_entities)
-		self.exceptions = self._extract_exceptions(mwe_entries)
-		self.config = config or {}
-		# Define punctuation to preserve in specific contexts
-		self.preserve_punct = {'.', '!', '?', '%'}  # Only essential punctuation
-		
-	def clean_text(self, text: str, entities: List[Tuple[str, str, str, int, int]], 
-			processed_tokens: List[Tuple[str, str, str, str, str]], 
-			use_lemma: bool = True) -> str:
-		# Create protected spans from entities
-		protected_spans = set()
-		entity_map = {}  # Map positions to complete entity text
-		for entity_text, _, _, start, end in entities:
-			protected_spans.update(range(start, end))
-			entity_map[(start, end)] = entity_text
-			
-		# Process tokens
-		cleaned_words = []
-		current_pos = 0
-		last_token_was_punct = False
-		
-		for token, lemma, pos, action, source in processed_tokens:
-			token_start = text[current_pos:].find(token)
-			if token_start == -1:
-				continue
-			token_start += current_pos
-			token_end = token_start + len(token)
-			
-			is_protected = any(token_start + i in protected_spans for i in range(len(token)))
-			
-			if is_protected:
-				entity = next(
-					(text for (start, end), text in entity_map.items() 
-					if start <= token_start < end),
-					None
-				)
-				if entity and (not cleaned_words or cleaned_words[-1] != entity):
-					cleaned_words.append(entity)
-					last_token_was_punct = False
-			elif action == 'Keep':
-				if self._is_punctuation(token):
-					# Only keep essential punctuation
-					if token in self.preserve_punct:
-						if cleaned_words and not last_token_was_punct:
-							cleaned_words[-1] = cleaned_words[-1].rstrip()
-							cleaned_words.append(token)
-							last_token_was_punct = True
-				else:
-					word = lemma if use_lemma else token
-					cleaned_words.append(word.lower())
-					last_token_was_punct = False
-					
-			current_pos = token_end
-			
-		if not cleaned_words:
-			return ""
-		
-		# Join words with appropriate spacing
-		cleaned_text = cleaned_words[0]
-		for word in cleaned_words[1:]:
-			if not self._is_punctuation(word):
-				cleaned_text += " "
-			cleaned_text += word
-			
-		return cleaned_text.strip()
-	
-	def _is_punctuation(self, token: str) -> bool:
-		"""Check if token consists entirely of punctuation characters."""
-		return all(not c.isalnum() for c in token)
-	
-	# [Previous _extract_entities and _extract_exceptions methods remain unchanged]
+logger = logging.getLogger(__name__)
+
+def clean_matched_text(
+    text: str,
+    matches: List[Token],
+    preserve_punct: Optional[Set[str]] = None,
+    use_lemma: bool = True,
+    lowercase: bool = True
+) -> str:
+    """
+    Clean text using pre-processed matches from unified_matcher.
+    
+    Args:
+        text: Original text to clean
+        matches: List of Token objects from unified_matcher
+        preserve_punct: Set of punctuation marks to preserve (defaults to {'.', '!', '?', '%'})
+        use_lemma: Whether to use lemmatized forms for non-entity tokens
+        lowercase: Whether to convert non-entity tokens to lowercase
+    
+    Returns:
+        Cleaned text string with preserved entities and specified formatting
+    """
+    preserve_punct = preserve_punct or {'.', '!', '?', '%'}
+    cleaned_words = []
+    
+    def is_punctuation(s: str) -> bool:
+        """Check if a string consists entirely of non-alphanumeric characters."""
+        return all(not c.isalnum() for c in s)
+    
+    for match in sorted(matches, key=lambda x: x.start):
+        token_text = match.original_text.strip()
+        
+        # Handle entities and MWEs - preserve original form
+        if match.source in {'Entity', 'CustomEntity', 'MWE', 'Regex'}:
+            cleaned_words.append(token_text)
+            continue
+            
+        # Handle punctuation
+        if is_punctuation(token_text):
+            if token_text in preserve_punct:
+                if cleaned_words and not is_punctuation(cleaned_words[-1]):
+                    cleaned_words[-1] = cleaned_words[-1].rstrip()
+                cleaned_words.append(token_text)
+            continue
+        
+        # Handle stopwords and regular tokens
+        if match.source in {'custom', 'spacy'} and match.label == 'Stopword':
+            word = token_text.lower() if lowercase else token_text
+        else:
+            word = match.lemma if use_lemma and match.lemma else token_text
+            if lowercase:
+                word = word.lower()
+                
+        cleaned_words.append(word)
+    
+    return " ".join(cleaned_words).strip()
+
+def clean_matched_texts(
+    texts: List[str],
+    matches_list: List[List[Token]],
+    **kwargs
+) -> List[str]:
+    """
+    Clean multiple texts using their corresponding matches.
+    
+    Args:
+        texts: List of original texts
+        matches_list: List of match lists (one per text)
+        **kwargs: Additional arguments passed to clean_matched_text
+    
+    Returns:
+        List of cleaned text strings
+    """
+    if len(texts) != len(matches_list):
+        raise ValueError("Number of texts must match number of match lists")
+        
+    return [
+        clean_matched_text(text, matches, **kwargs)
+        for text, matches in zip(texts, matches_list)
+    ]
