@@ -6,7 +6,7 @@ import spacy
 import re
 import logging
 from typing import List, Tuple, Dict, Any, Optional, Union, Set, NamedTuple
-from custom_file_utils import load_language_data
+from legacy_sentiment.utils.custom_file_utils import load_language_data
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

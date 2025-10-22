@@ -1,0 +1,24 @@
+{
+  "language": "english",
+  "clean": true,
+  "remove_stopwords": true,
+  "lemmatize": true,
+  "preserve_financial_terms": true,
+  "lowercase_entities": false,
+  "custom_stopwords_files": [
+    "data/language/custom_stops.json"
+  ],
+  "custom_entities_files": [
+    "data/language/custom_entities.json"
+  ],
+  "regex_pattern_files": [
+    "data/language/custom_regex_patterns.json"
+  ],
+  "multi_word_expression_files": [
+    "data/language/custom_mwe.json"
+  ],
+  "spacy_model": "en_core_web_sm",
+  "max_workers": 4,
+  "batch_size": 1000,
+  "chunk_size": 500
+}
