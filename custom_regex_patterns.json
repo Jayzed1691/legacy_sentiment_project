@@ -1,0 +1,49 @@
+{
+  "financial_patterns": [
+    {"pattern": "\\b[A-Z]{3,5}\\b"},
+    {"pattern": "\\b\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?\\b"},
+    {"pattern": "\\b(?:USD|EUR|GBP|JPY|CAD|AUD|CHF|IDR)\\b"},
+    {"pattern": "\\b(?:stock|share|bond|equity|option|future|derivative)\\b"},
+    {"pattern": "\\b(?:mutual fund|REIT|ETF)\\b"},
+    {"pattern": "\\b(?:bank|brokerage|investment|finance|trading)\\b"},
+    {"pattern": "\\b-?\\d+(?:\\.\\d+)?%\\b"},
+    {"pattern": "\\b(?:Rupiah|Rp)\\b"}
+  ],
+  "time_patterns": [
+    {"pattern": "(?i)\\b(?:Q[1-4]|[1-4]Q|[1-4](?:st|nd|rd|th)?[-_./\\s]?Q|First|Second|Third|Fourth[-_./\\s]?Quarter|Quarter[-_./\\s]?[1-4])(?:,?[-_./\\s]*(?:\\bof\\b[-_./\\s]*)?)(?:'?\\d{2,4})\\b"},
+    {"pattern": "(?i)\\b(?:H[1-2]|[1-2]H|[1-2](?:st|nd|rd|th)?[-_./\\s]?Half|First|Second[-_./\\s]?Half)(?:,?[-_./\\s]*(?:\\bof\\b[-_./\\s]*)?)(?:'?\\d{2,4})\\b"},
+    {"pattern": "(?i)\\b(?:FY\\d{2,4}|full[-_./\\s]?year|fiscal[-_./\\s]?year|previous[-_./\\s]?year|last[-_./\\s]?year|this[-_./\\s]?year|next[-_./\\s]?year)\\b"},
+    {"pattern": "\\b\\d{1,2}/\\d{1,2}/\\d{4}\\b"},
+    {
+      "pattern": "(?i)\\b(?:M[1-12]|[1-12]M|Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December|rolling[-_./\\s]?(?:3|6)[-_./\\s]?month|month[-_./\\s]?to[-_./\\s]?date)\\b"
+    },
+    {"pattern": "\\b\\d{4}-\\d{2}-\\d{2}\\b"},
+    {"pattern": "\\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\\s\\d{1,2},\\s\\d{4}\\b"},
+    {"pattern": "\\b\\d{1,2}:\\d{2}\\b"},
+    {"pattern": "\\b\\d{1,2}(?:am|pm)\\b"},
+    {"pattern": "\\b(?:morning|afternoon|evening|night)\\b"},
+    {"pattern": "\\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\\b"},
+    {"pattern": "\\b(?:today|yesterday|tomorrow)\\b"},
+    {"pattern": "\\b(?:next|last|previous)\\s(?:Monday|week|month|quarter|year)\\b"},
+    {"pattern": "(?i)\\b(?:ytd|year[-_./\\s]?to[-_./\\s]?date)\\b"},
+    {"pattern": "(?i)\\b(?:qtd|quarter[-_./\\s]?to[-_./\\s]?date)\\b"},
+    {"pattern": "(?i)\\b(?:ttm|trailing[-_./\\s]?twelve[-_./\\s]?months)\\b"},
+    {"pattern": "(?i)\\b(?:rolling[-_./\\s]?3[-_./\\s]?month)\\b"},
+    {"pattern": "(?i)\\b(?:rolling[-_./\\s]?6[-_./\\s]?month)\\b"},
+    {"pattern": "(?i)\\b(?:sequential[-_./\\s]?comparison|compared[-_./\\s]?to[-_./\\s]?(?:previous|prior|same)[-_./\\s]?(?:quarter|period|year)|year[-_./\\s]?over[-_./\\s]?year|yoy|quarter[-_./\\s]?over[-_./\\s]?quarter|qoq|comparative[-_./\\s]?period)\\b"},
+    {"pattern": "(?i)\\b(?:calendar[-_./\\s]?year)\\b"},
+    {"pattern": "(?i)\\b(?:fiscal[-_./\\s]?year)\\b"},
+    {"pattern": "(?i)\\b(?:w|week|m|month|q|quarter|h|half|y|year|period)(?:[-_./\\s]*(?:on|over)[-_./\\s]*(?:w|week|m|month|q|quarter|h|half|y|year|period))\\b"},
+    {"pattern": "\\b(?:earnings season|dividend season|reporting period)\\b"}
+  ],
+  "currency_patterns": [
+    {"pattern": "\\b(?:USD|EUR|GBP|JPY|CAD|AUD|CHF|IDR)\\b"},
+    {"pattern": "\\$\\d+(?:\\.\\d+)?"},
+    {"pattern": "€\\d+(?:\\.\\d+)?"},
+    {"pattern": "£\\d+(?:\\.\\d+)?"},
+    {"pattern": "¥\\d+(?:\\.\\d+)?"},
+    {"pattern": "Rp\\d+(?:\\.\\d+)?"},
+    {"pattern": "\\b(?:\\$|€|£|¥|Rp)?\\d+(?:\\.\\d+)?[KMBT]\\b"},
+    {"pattern": "\\b(?:\\$|€|£|¥|Rp)?\\d+(?:,\\d{3})*(?:\\.\\d+)?(?:\\s?(thousand|million|billion|trillion|k|m|b|t))?\\b"}
+  ]
+}

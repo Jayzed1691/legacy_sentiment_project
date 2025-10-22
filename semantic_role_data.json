@@ -1,0 +1,78 @@
+{
+  "BUSINESS_ROLES": {
+    "revenue": "THEME",
+    "profit": "THEME",
+    "cost": "THEME",
+    "margin": "THEME",
+    "customer": "BENEFICIARY",
+    "competitor": "FORCE",
+    "market": "LOCATION",
+    "guidance": "PREDICTOR",
+    "forecast": "PREDICTOR",
+    "impact": "FORCE",
+    "growth": "THEME",
+    "performance": "THEME",
+    "strategy": "THEME"
+  },
+  "FINANCIAL_TERMS": {
+    "EBITDA": "METRIC",
+    "EPS": "METRIC",
+    "GAAP": "STANDARD",
+    "IFRS": "STANDARD",
+    "cash flow": "METRIC",
+    "revenue": "METRIC",
+    "net income": "METRIC",
+    "gross margin": "METRIC",
+    "operating income": "METRIC",
+    "return on equity": "METRIC",
+    "return on assets": "METRIC",
+    "earnings per share": "METRIC"
+  },
+    "MARKET_DYNAMICS": {
+    "market share": "METRIC",
+    "market position": "ATTRIBUTE",
+    "market trend": "THEME",
+    "market leader": "ATTRIBUTE",
+    "market entry": "ACTION",
+    "market penetration": "METRIC",
+    "competitive advantage": "ATTRIBUTE",
+    "industry average": "BENCHMARK"
+  },
+  "OPERATIONAL_TERMS": {
+    "productivity": "ATTRIBUTE",
+    "efficiency": "ATTRIBUTE",
+    "streamline": "ACTION",
+    "optimize": "ACTION",
+    "capacity utilization": "METRIC",
+    "throughput": "METRIC",
+    "bottleneck": "ISSUE",
+    "quality control": "PROCESS"
+  },
+    "CORPORATE_ACTIONS": {
+    "acquisition": "ACTION",
+    "merger": "ACTION",
+    "divestiture": "ACTION",
+    "restructuring": "ACTION",
+    "buyback": "ACTION",
+    "stock split": "ACTION",
+    "dividend": "THEME"
+  },
+  "GEOGRAPHIC_TERMS": {
+    "global": "SCOPE",
+    "international": "SCOPE",
+    "domestic": "SCOPE",
+    "regional": "SCOPE",
+    "local": "SCOPE",
+    "emerging markets": "MARKET",
+    "developed markets": "MARKET"
+  },
+  "ESG_TERMS": {
+    "sustainability": "THEME",
+    "carbon footprint": "METRIC",
+    "renewable energy": "THEME",
+    "emission reduction": "ACTION",
+    "diversity and inclusion": "THEME",
+    "corporate social responsibility": "THEME",
+    "ethical sourcing": "THEME"
+  }
+}
