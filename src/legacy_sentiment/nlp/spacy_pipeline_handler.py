@@ -6,16 +6,16 @@ import spacy
 import re
 import logging
 from typing import List, Tuple, Dict, Any, Optional, Union, Set, NamedTuple
-from custom_file_utils import load_language_data, load_json_file
+from legacy_sentiment.utils.custom_file_utils import load_json_file, load_language_data
 from custom_entity_handler import CustomEntityHandler
 from mwe_handler import MWEHandler
 from regex_pattern_handler import RegexPatternHandler
-from stopword_handler import StopwordHandler
+from legacy_sentiment.utils.stopword_handler import StopwordHandler
 from semantic_role_handler import SemanticRoleHandler
 from aspect_handler import AspectHandler
-from text_cleaner import TextCleaner
-from token_processor import TokenProcessor
-from data_types import EntityToken
+from legacy_sentiment.processing.text_cleaner import TextCleaner
+from legacy_sentiment.processing.token_processor import TokenProcessor
+from legacy_sentiment.data_models.data_types import EntityToken
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

@@ -4,8 +4,9 @@
 
 import pdfplumber
 import re
-from typing import List, Tuple, Optional
-from transcript_structures import TranscriptData, Section, DialogueEntry
+from typing import List, Optional, Tuple
+
+from legacy_sentiment.data_models.transcript_structures import DialogueEntry, Section, TranscriptData
 
 class PDFTranscriptParser:
 	def __init__(self):

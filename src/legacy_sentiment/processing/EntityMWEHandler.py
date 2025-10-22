@@ -9,21 +9,21 @@ import json
 from typing import List, Tuple, Dict, Any, Union, Optional
 from nltk.tokenize import sent_tokenize, word_tokenize
 import spacy
-from custom_file_utils import (
-	load_custom_entities, 
-	load_multi_word_entries, 
-	load_regex_patterns,
-	load_json_file,
-	load_language_data,
-	load_custom_stopwords
+from legacy_sentiment.utils.custom_file_utils import (
+        load_custom_entities,
+        load_custom_stopwords,
+        load_json_file,
+        load_language_data,
+        load_multi_word_entries,
+        load_regex_patterns,
 )
 from custom_entity_handler import CustomEntityHandler
 from mwe_handler import MWEHandler
 from regex_pattern_handler import RegexPatternHandler
 from spacy_handler import SpaCyHandler
-from stopword_handler import StopwordHandler
-from text_cleaner import TextCleaner
-from token_processor import TokenProcessor
+from legacy_sentiment.utils.stopword_handler import StopwordHandler
+from legacy_sentiment.processing.text_cleaner import TextCleaner
+from legacy_sentiment.processing.token_processor import TokenProcessor
 
 # Download required NLTK data
 nltk.download('punkt', quiet=True)

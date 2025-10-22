@@ -8,7 +8,7 @@ import re
 from typing import List, Tuple, Dict, Union
 import nltk
 from nltk.tokenize import sent_tokenize
-from custom_file_utils import load_regex_patterns
+from legacy_sentiment.utils.custom_file_utils import load_regex_patterns
 
 class RegexPatternHandler:    
 	def __init__(self, regex_patterns_files: Union[str, List[str]]):

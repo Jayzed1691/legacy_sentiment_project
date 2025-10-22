@@ -3,7 +3,8 @@
 # txt_transcript_parser.py
 
 from typing import List, Tuple
-from transcript_structures import TranscriptData, Section, DialogueEntry
+
+from legacy_sentiment.data_models.transcript_structures import DialogueEntry, Section, TranscriptData
 
 class TXTTranscriptParser:
 	
