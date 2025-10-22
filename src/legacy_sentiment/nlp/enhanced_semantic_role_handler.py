@@ -3,12 +3,27 @@
 # enhanced_semantic_role_handler.py
 
 import logging
-from typing import Dict, List, Optional, Union, Any
+from typing import Any, Dict, List, Optional, Union
+
 import spacy
 from spacy.tokens import Doc
-from data_types import EnhancedSemanticRole, SemanticComplex, Token
-from semantic_role_config import SEMANTIC_ROLES
-from unified_matcher_refactored import get_excluded_positions, is_position_excluded
+
+from legacy_sentiment.config.semantic_role_config import SEMANTIC_ROLES
+from legacy_sentiment.data_models.data_types import (
+        EnhancedSemanticRole,
+        SemanticComplex,
+        Token,
+)
+try:
+        from legacy_sentiment.processing.unified_matcher_refactored import (
+                get_excluded_positions,
+                is_position_excluded,
+        )
+except ImportError:  # pragma: no cover - legacy fallback
+        from superceded.unified_matcher_refactored import (  # type: ignore
+                get_excluded_positions,
+                is_position_excluded,
+        )
 
 # Configure the logger
 logging.basicConfig(level=logging.DEBUG)

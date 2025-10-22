@@ -5,7 +5,7 @@
 import json
 import logging
 from typing import List, Tuple, Dict, Any, Union
-from custom_file_utils import load_multi_word_entries
+from legacy_sentiment.utils.custom_file_utils import load_multi_word_entries
 
 class MWEHandler:
 	def __init__(self, multi_word_entries_files: Union[str, List[str]]):

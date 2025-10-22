@@ -2,27 +2,34 @@
 
 # test_spacy_pipeline.py
 
-import streamlit as st
 import json
-import tempfile
+import logging
 import os
-from typing import List, Tuple, Dict, Any
+import tempfile
+from typing import Any, Dict, List, Tuple
+
+import nltk
 import pandas as pd
 import spacy
-import logging
-from spacy_pipeline_handler import SpaCyPipelineHandler
-import nltk
+import streamlit as st
 from nltk.tokenize import sent_tokenize
-from data_types import SemanticRole, AspectTerm, EntityToken, ProcessedToken
-from transcript_handler import process_transcript
-from transcript_structures import TranscriptData
-from custom_file_utils import (
-	load_custom_entities,
-	load_multi_word_entries,
-	load_regex_patterns,
-	load_language_data,
-	load_custom_stopwords,
-	load_aspect_configuration
+
+from legacy_sentiment.nlp.spacy_pipeline_handler import SpaCyPipelineHandler
+from legacy_sentiment.data_models.data_types import (
+        AspectTerm,
+        EntityToken,
+        ProcessedToken,
+        SemanticRole,
+)
+from legacy_sentiment.ingestion.transcript_handler import process_transcript
+from legacy_sentiment.data_models.transcript_structures import TranscriptData
+from legacy_sentiment.utils.custom_file_utils import (
+        load_aspect_configuration,
+        load_custom_entities,
+        load_custom_stopwords,
+        load_language_data,
+        load_multi_word_entries,
+        load_regex_patterns,
 )
 
 # Configure logging

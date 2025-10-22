@@ -2,10 +2,12 @@
 
 # stopword_handler.py
 
-import spacy
 import json
-from typing import List, Tuple, Dict, Any, Union
-from custom_file_utils import load_custom_stopwords
+from typing import List, Tuple
+
+import spacy
+
+from legacy_sentiment.utils.custom_file_utils import load_custom_stopwords
 
 class StopwordHandler:
 	def __init__(self, custom_stopwords_files: List[str], case_sensitive: bool = False):
