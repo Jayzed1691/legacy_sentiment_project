@@ -1,26 +1,70 @@
 # Legacy Sentiment Project
 
-## Overview
-Legacy Sentiment Project is an NLP toolkit for financial transcripts that combines spaCy-based parsing, custom entity dictionaries, and semantic-role analysis to extract structured insights from earnings calls and similar documents.​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=152 path=spacy_pipeline_handler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/spacy_pipeline_handler.py#L1-L152"}​​:codex-file-citation[codex-file-citation]{line_range_start=36 line_range_end=152 path=EntityMWEHandler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/EntityMWEHandler.py#L36-L152"}
+Legacy Sentiment is an NLP toolkit focused on financial transcripts. It layers custom dictionaries, spaCy pipelines, and semantic-role extraction on top of ingest utilities so analysts can explore earnings calls with Streamlit dashboards or standalone scripts.
 
 ## Features
-- **Configurable spaCy pipeline** with support for custom language data, multi-word expressions, regex patterns, and stopword management.​:codex-file-citation[codex-file-citation]{line_range_start=94 line_range_end=152 path=spacy_pipeline_handler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/spacy_pipeline_handler.py#L94-L152"}​
-- **Entity and token post-processing** that protects matched spans and cleans sentences without losing financial context.​:codex-file-citation[codex-file-citation]{line_range_start=136 line_range_end=152 path=EntityMWEHandler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/EntityMWEHandler.py#L136-L152"}​​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=118 path=token_processor.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/token_processor.py#L1-L118"}​
-- **Semantic-role enrichment** designed to align matches with predicate-argument structures for downstream analytics.​:codex-file-citation[codex-file-citation]{line_range_start=17 line_range_end=160 path=enhanced_semantic_role_handler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/enhanced_semantic_role_handler.py#L17-L160"}​​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=170 path=semantic_role_config.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/semantic_role_config.py#L1-L170"}​
-- **Transcript ingestion utilities** for JSON, PDF, and TXT formats, producing hierarchical dialogue structures for further analysis.​:codex-file-citation[codex-file-citation]{line_range_start=12 line_range_end=63 path=transcript_handler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/transcript_handler.py#L12-L63"}​​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=23 path=transcript_structures.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/transcript_structures.py#L1-L23"}​
+- **Configurable preprocessing** – The NLTK-based `TextPreprocessor` normalizes text, preserves financial vocabulary, and extracts regex-driven patterns while reading settings from `preprocessing_config.json`.
+- **Custom spaCy pipeline** – `EntityMWEHandler` and the spaCy helpers load domain dictionaries, multi-word expressions, and semantic-role metadata to annotate transcripts with consistent spans.
+- **Transcript ingestion** – Parsers convert JSON, TXT, and PDF call notes into structured `TranscriptData` objects that power the demo applications and downstream analytics.
+- **Streamlit demos** – Two dashboards (`test_EntityMWEHandler.py` and `test_spacy_pipeline.py`) showcase entity detection, preprocessing, and transcript browsing.
 
-## Getting Started
-1. Install dependencies (`spaCy`, `nltk`, `ahocorasick`, `streamlit`) and download required spaCy/NLTK models as referenced inside the modules.
-2. Populate `data/language` with domain dictionaries (`custom_entities.json`, `custom_mwe.json`, `custom_regex_patterns.json`, `language_data.json`, `semantic_role_data.json`).​:codex-terminal-citation[codex-terminal-citation]{line_range_start=1 line_range_end=8 terminal_chunk_id=696719}​
-3. Launch the Streamlit demos:
-- `streamlit run src/legacy_sentiment/streamlit/test_EntityMWEHandler.py`
-- `streamlit run src/legacy_sentiment/streamlit/test_spacy_pipeline.py`  
-These apps demonstrate end-to-end processing of uploaded transcripts.​:codex-file-citation[codex-file-citation]{line_range_start=12 line_range_end=152 path=test_EntityMWEHandler.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/test_EntityMWEHandler.py#L12-L152"}​​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=102 path=test_spacy_pipeline.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/test_spacy_pipeline.py#L1-L102"}​
+## Repository Layout
+```
+├── data/
+│   ├── language/                # Sample dictionaries for entities, stopwords, regex rules, and semantic roles
+│   └── transcripts/             # Example transcripts ready for upload to the demos
+├── preprocessing_config.json    # Default preprocessing settings consumed by the apps and helpers
+├── src/legacy_sentiment/
+│   ├── data_models/             # Token, semantic-role, and transcript data structures
+│   ├── ingestion/               # JSON/TXT/PDF transcript parsers plus convenience wrappers
+│   ├── nlp/                     # spaCy pipeline setup, semantic-role handler, and NER utilities
+│   ├── processing/              # Text preprocessor, entity + MWE handlers, regex helpers, and cleaners
+│   ├── streamlit/               # UI components for uploading transcripts and running analyses
+│   └── utils/                   # File-loading utilities, stopword helpers, and aspect configuration logic
+└── superceded/                  # Archived legacy modules kept for reference only
+```
 
-## Current Gaps
-- Reconstruct the richer data model (`Token`, `EnhancedSemanticRole`, spaCy constants) expected throughout the codebase.​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=37 path=data_types.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/data_types.py#L1-L37"}​​:codex-file-citation[codex-file-citation]{line_range_start=12 line_range_end=159 path=unified_matcher_refactored.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/unified_matcher_refactored.py#L12-L159"}​
-- Restore the missing transcript upload/display helpers and token cleaning utilities imported by the Streamlit wrappers.​:codex-file-citation[codex-file-citation]{line_range_start=11 line_range_end=205 path=unified_matcher_test_refactored.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/unified_matcher_test_refactored.py#L11-L205"}​​:codex-terminal-citation[codex-terminal-citation]{line_range_start=1 line_range_end=2 terminal_chunk_id=28a5d0}​​:codex-terminal-citation[codex-terminal-citation]{line_range_start=1 line_range_end=2 terminal_chunk_id=16178c}​
-- Finish the `TextCleaner` helper methods and provide a module-level `clean_matched_text` shim for legacy callers.​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=83 path=text_cleaner.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/text_cleaner.py#L1-L83"}​​:codex-file-citation[codex-file-citation]{line_range_start=195 line_range_end=205 path=unified_matcher_test_refactored.py git_url="https://github.com/Jayzed1691/legacy_sentiment_project/blob/main/unified_matcher_test_refactored.py#L195-L205"}​
+## Configuration and Sample Data
+The repository includes ready-to-use assets so the demos work immediately:
+
+- **`preprocessing_config.json`** – Controls the `TextPreprocessor` pipeline. It specifies language, boolean flags (cleaning, stopword removal, lemmatization), and the sample dictionary files in `data/language/`. Streamlit writes back to this file when configuration changes are saved.
+- **Language dictionaries (`data/language/`)** – JSON resources that power entity recognition, multi-word detection, regex extraction, and stopword overrides. They can be replaced with organization-specific vocabularies while keeping the same schema.
+- **Sample transcripts (`data/transcripts/`)** – Includes `earnings_call_sample.json` for structured ingestion and `earnings_call_sample.txt` for plain-text parsing.
+
+### Transcript JSON Format
+JSON transcripts should follow the structure expected by `JSONTranscriptParser`:
+```json
+{
+  "transcript": [
+    {
+      "section": "Prepared Remarks",
+      "speakers": [
+        {"name": "Speaker", "role": "Role", "dialogue": "Utterance text"}
+      ],
+      "subsections": [
+        {
+          "section": "Optional Subsection",
+          "speakers": [...],
+          "subsections": []
+        }
+      ]
+    }
+  ]
+}
+```
+Each section contains speaker entries (name, optional role, and dialogue text) plus optional nested subsections for deeper hierarchies.
+
+## Running the Demos
+1. Create a virtual environment and install dependencies (spaCy, nltk, ahocorasick, streamlit).
+2. Download the required spaCy model, e.g. `python -m spacy download en_core_web_sm`.
+3. Launch the Streamlit interfaces from the project root:
+   - `streamlit run src/legacy_sentiment/streamlit/test_EntityMWEHandler.py`
+   - `streamlit run src/legacy_sentiment/streamlit/test_spacy_pipeline.py`
+4. Use the sidebar controls to load the bundled configuration and transcripts or upload your own files.
 
 ## Testing
-Once the missing modules are rebuilt, add automated tests in `tests/` mirroring the existing Streamlit workflows and validate transcript ingestion with sample files.
+A quick smoke check can be performed with:
+```
+python -m compileall src/legacy_sentiment
+```
+Add automated tests under `tests/` to cover transcript ingestion, preprocessing, and pipeline integration as new functionality stabilizes.
