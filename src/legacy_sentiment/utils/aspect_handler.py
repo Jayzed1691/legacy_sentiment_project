@@ -2,11 +2,13 @@
 
 # aspect_handler.py
 
-import spacy
-from typing import List, Dict, Any, Tuple, Optional, NamedTuple, Set
-from data_types import SemanticRole, AspectTerm
 import logging
-from custom_file_utils import load_json_file
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+import spacy
+
+from legacy_sentiment.data_models.data_types import AspectTerm, SemanticRole
+from legacy_sentiment.utils.custom_file_utils import load_json_file
 
 logger = logging.getLogger(__name__)
 

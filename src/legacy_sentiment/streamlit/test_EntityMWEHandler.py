@@ -10,22 +10,27 @@ import os
 import nltk
 import pandas as pd
 from typing import Dict, Any, List, Tuple, Optional, Union
-from custom_file_utils import (
-	load_custom_entities, 
-	load_multi_word_entries, 
-	load_regex_patterns,
-	load_json_file,
-	load_language_data,
-	load_custom_stopwords,
-	load_aspect_configuration
+from legacy_sentiment.utils.custom_file_utils import (
+        load_aspect_configuration,
+        load_custom_entities,
+        load_custom_stopwords,
+        load_json_file,
+        load_language_data,
+        load_multi_word_entries,
+        load_regex_patterns,
 )
-from transcript_handler import process_transcript
-from transcript_structures import TranscriptData
-from EntityMWEHandler import EntityMWEHandler
-from spacy_handler import SpaCyHandler, POSToken, NounChunk
-from semantic_role_handler import SemanticRoleHandler
-from aspect_handler import AspectHandler
-from data_types import EntityToken, ProcessedToken, SemanticRole, AspectTerm
+from legacy_sentiment.ingestion.transcript_handler import process_transcript
+from legacy_sentiment.data_models.transcript_structures import TranscriptData
+from legacy_sentiment.processing.EntityMWEHandler import EntityMWEHandler
+from legacy_sentiment.nlp.spacy_handler import SpaCyHandler, POSToken, NounChunk
+from legacy_sentiment.nlp.semantic_role_handler import SemanticRoleHandler
+from legacy_sentiment.utils.aspect_handler import AspectHandler
+from legacy_sentiment.data_models.data_types import (
+        AspectTerm,
+        EntityToken,
+        ProcessedToken,
+        SemanticRole,
+)
 from nltk.tokenize import sent_tokenize
 import spacy
 

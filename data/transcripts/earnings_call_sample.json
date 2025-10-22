@@ -1,0 +1,53 @@
+{
+  "transcript": [
+    {
+      "section": "Prepared Remarks",
+      "speakers": [
+        {
+          "name": "Operator",
+          "role": "Operator",
+          "dialogue": "Good day everyone, and welcome to the Q1 2024 Legacy Sentiment earnings call."
+        },
+        {
+          "name": "Jordan Ellis",
+          "role": "CEO",
+          "dialogue": "Our revenue reached 125 million dollars, driven by strong gross merchandise value across the marketplace."
+        },
+        {
+          "name": "Morgan Patel",
+          "role": "CFO",
+          "dialogue": "We expanded adjusted EBITDA margins by 200 basis points year over year while maintaining disciplined operating expenses."
+        }
+      ],
+      "subsections": [
+        {
+          "section": "Strategic Highlights",
+          "speakers": [
+            {
+              "name": "Jordan Ellis",
+              "role": "CEO",
+              "dialogue": "We launched new lending products through GoTo Financial and increased wallet share with enterprise customers."
+            }
+          ],
+          "subsections": []
+        }
+      ]
+    },
+    {
+      "section": "Q&A Session",
+      "speakers": [
+        {
+          "name": "Alex Kim",
+          "role": "Analyst",
+          "dialogue": "Can you discuss expectations for free cash flow and capital expenditure in the second half of the year?"
+        },
+        {
+          "name": "Morgan Patel",
+          "role": "CFO",
+          "dialogue": "We anticipate free cash flow to remain positive with capex focused on our logistics network upgrades."
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

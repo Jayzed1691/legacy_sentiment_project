@@ -6,7 +6,7 @@ from spacy.tokens import Doc, Span
 from spacy.util import filter_spans
 from typing import List, Tuple, Dict, Any, Union
 from streamlit.runtime.uploaded_file_manager import UploadedFile
-from file_utils import load_custom_entities
+from legacy_sentiment.utils.custom_file_utils import load_custom_entities
 
 @Language.factory("custom_entity_matcher")
 class CustomEntityMatcher:

@@ -3,9 +3,10 @@
 # transcript_structures.py
 
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import Dict, List
 from collections import defaultdict
-from data_types import SemanticRole
+
+from legacy_sentiment.data_models.data_types import SemanticRole
 
 @dataclass
 class DialogueEntry:

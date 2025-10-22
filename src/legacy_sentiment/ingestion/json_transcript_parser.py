@@ -3,10 +3,9 @@
 # json_transcript_parser.py
 
 import logging
-from typing import Dict, List, Any
-from dataclasses import dataclass, field
-from collections import defaultdict
-from transcript_structures import TranscriptData, Section, DialogueEntry
+from typing import Any, Dict
+
+from legacy_sentiment.data_models.transcript_structures import DialogueEntry, Section, TranscriptData
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
