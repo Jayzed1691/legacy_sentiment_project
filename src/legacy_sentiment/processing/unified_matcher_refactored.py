@@ -22,8 +22,8 @@ from legacy_sentiment.data_models.data_types import (
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Default load the small SpaCy model
-NLP = spacy.load(SPACY_MODEL_SM)
+# Default SpaCy model (loaded on demand)
+NLP = None
 
 def set_spacy_model(model_name: str):
 	"""Allows switching SpaCy model dynamically."""
@@ -555,6 +555,14 @@ def unified_match(
 	expand_trailing: bool = False,
 ) -> List[Token]:
 	"""Unified matching pipeline for entities, MWEs, regex, SpaCy tokens and language patterns."""
+	global NLP
+	if NLP is None:
+		try:
+			NLP = spacy.load(SPACY_MODEL_SM)
+		except OSError:
+			logger.warning(f"spaCy model {SPACY_MODEL_SM} not found. Some features may not work.")
+			# Return minimal matches without spaCy
+			return []
 	doc = NLP(text)
 	matches = []
 	

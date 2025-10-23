@@ -17,10 +17,10 @@ from legacy_sentiment.utils.custom_file_utils import (
         load_multi_word_entries,
         load_regex_patterns,
 )
-from custom_entity_handler import CustomEntityHandler
-from mwe_handler import MWEHandler
-from regex_pattern_handler import RegexPatternHandler
-from spacy_handler import SpaCyHandler
+from legacy_sentiment.processing.custom_entity_handler import CustomEntityHandler
+from legacy_sentiment.processing.mwe_handler import MWEHandler
+from legacy_sentiment.processing.regex_pattern_handler import RegexPatternHandler
+from legacy_sentiment.nlp.spacy_handler import SpaCyHandler
 from legacy_sentiment.utils.stopword_handler import StopwordHandler
 from legacy_sentiment.processing.text_cleaner import TextCleaner
 from legacy_sentiment.processing.token_processor import TokenProcessor
@@ -72,10 +72,16 @@ class EntityMWEHandler:
 							if custom_entities_files else None)
 		self.mwe_handler = (MWEHandler(multi_word_entries_files) 
 							if multi_word_entries_files else None)
-		self.regex_handler = (RegexPatternHandler(regex_patterns_files) 
+		self.regex_handler = (RegexPatternHandler(regex_patterns_files)
 							if regex_patterns_files else None)
-		
-		self.nlp = spacy.load("en_core_web_sm")
+
+		# Load spaCy model lazily (only if needed)
+		self.nlp = None
+		try:
+			self.nlp = spacy.load("en_core_web_sm")
+		except OSError:
+			logging.warning("spaCy model 'en_core_web_sm' not found. Entity recognition will use custom handlers only.")
+
 		self.language_data = language_data or {}
 		self.spacy_handler = spacy_handler or SpaCyHandler({})
 		
@@ -173,15 +179,16 @@ class EntityMWEHandler:
 			
 		if self.regex_handler:
 			all_matches.extend(self.regex_handler.process_text(text))
-			
-		# SpaCy processing is always available
-		doc = self.nlp(text)
-		spacy_entities = [
-			(ent.text, ent.label_, 'spaCy', ent.start_char, ent.end_char)
-			for ent in doc.ents if not self.spacy_handler._contains_and(ent.text)
-		]
-		spacy_entities = self.spacy_handler.refine_entities(text, spacy_entities)
-		all_matches.extend(spacy_entities)
+
+		# SpaCy processing (only if model is loaded)
+		if self.nlp is not None:
+			doc = self.nlp(text)
+			spacy_entities = [
+				(ent.text, ent.label_, 'spaCy', ent.start_char, ent.end_char)
+				for ent in doc.ents if not self.spacy_handler._contains_and(ent.text)
+			]
+			spacy_entities = self.spacy_handler.refine_entities(text, spacy_entities)
+			all_matches.extend(spacy_entities)
 		
 		non_overlapping = self._remove_overlaps(all_matches)
 		
