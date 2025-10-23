@@ -176,15 +176,24 @@ class TranscriptParser:
         lines = content.splitlines()
 
         i = 0
-        while i < len(lines):
-            line = lines[i].strip()
-            if line.startswith("Section:"):
-                section_name = line.split("Section:")[1].strip()
-                section = Section(name=section_name)
-                transcript_data.sections.append(section)
-                i = self._parse_txt_section(lines, i + 1, section)
-            else:
-                i += 1
+        has_sections = any(line.strip().startswith("Section:") for line in lines)
+
+        # If no explicit sections, create a default section for all dialogues
+        if not has_sections:
+            default_section = Section(name="Transcript")
+            transcript_data.sections.append(default_section)
+            self._parse_txt_section(lines, 0, default_section)
+        else:
+            # Parse with explicit sections
+            while i < len(lines):
+                line = lines[i].strip()
+                if line.startswith("Section:"):
+                    section_name = line.split("Section:")[1].strip()
+                    section = Section(name=section_name)
+                    transcript_data.sections.append(section)
+                    i = self._parse_txt_section(lines, i + 1, section)
+                else:
+                    i += 1
 
         # Build speaker index
         self._build_speaker_index(transcript_data)
