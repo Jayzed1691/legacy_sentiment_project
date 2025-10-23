@@ -39,12 +39,17 @@ class SpaCyHandler:
 			language_data_files: Language data file path(s) or dictionary
 			model: SpaCy model to use
 		"""
+		self.nlp = None
 		try:
 			self.nlp = spacy.load(model)
 			logger.info(f"Loaded spaCy model: {model}")
 		except OSError:
-			self.nlp = spacy.load("en_core_web_sm")
-			logger.warning(f"Model {model} not found, using en_core_web_sm instead")
+			try:
+				self.nlp = spacy.load("en_core_web_sm")
+				logger.warning(f"Model {model} not found, using en_core_web_sm instead")
+			except OSError:
+				logger.warning(f"No spaCy model available. SpaCy-based features will be disabled.")
+				self.nlp = None
 			
 		# Load and verify language data
 		if isinstance(language_data_files, dict):

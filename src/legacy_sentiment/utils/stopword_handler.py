@@ -11,10 +11,22 @@ from legacy_sentiment.utils.custom_file_utils import load_custom_stopwords
 
 class StopwordHandler:
 	def __init__(self, custom_stopwords_files: List[str], case_sensitive: bool = False):
-		self.nlp = spacy.load("en_core_web_sm")
+		# Try to load spaCy model for default stopwords
+		self.nlp = None
+		try:
+			self.nlp = spacy.load("en_core_web_sm")
+		except OSError:
+			# No spaCy model available, will use only custom stopwords
+			pass
+
 		self.case_sensitive = case_sensitive
 		self.custom_stopwords = self.load_custom_stopwords(custom_stopwords_files)
-		self.all_stopwords = self.nlp.Defaults.stop_words.union(self.custom_stopwords)
+
+		# Get default stopwords from spaCy if available, otherwise use empty set
+		if self.nlp:
+			self.all_stopwords = self.nlp.Defaults.stop_words.union(self.custom_stopwords)
+		else:
+			self.all_stopwords = self.custom_stopwords
 		
 	def load_custom_stopwords(self, custom_stopwords_files: List[str]) -> set:
 		stopwords_dict = load_custom_stopwords(custom_stopwords_files)
@@ -26,14 +38,14 @@ class StopwordHandler:
 	def process_text_from_doc(self, doc: spacy.tokens.Doc) -> List[Tuple[str, str, str, str, str]]:
 		"""Process tokens from pre-processed Doc."""
 		processed_tokens = []
-		
+
 		# Create case-sensitive sets once for the whole doc
 		if not self.case_sensitive:
 			custom_stops = {word.lower() for word in self.custom_stopwords}
-			standard_stops = {word.lower() for word in self.nlp.Defaults.stop_words}
+			standard_stops = {word.lower() for word in self.nlp.Defaults.stop_words} if self.nlp else set()
 		else:
 			custom_stops = self.custom_stopwords
-			standard_stops = self.nlp.Defaults.stop_words
+			standard_stops = self.nlp.Defaults.stop_words if self.nlp else set()
 			
 		for token in doc:
 			token_text = token.text if self.case_sensitive else token.text.lower()
