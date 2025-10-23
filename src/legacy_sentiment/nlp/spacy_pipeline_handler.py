@@ -7,12 +7,12 @@ import re
 import logging
 from typing import List, Tuple, Dict, Any, Optional, Union, Set, NamedTuple
 from legacy_sentiment.utils.custom_file_utils import load_json_file, load_language_data
-from custom_entity_handler import CustomEntityHandler
-from mwe_handler import MWEHandler
-from regex_pattern_handler import RegexPatternHandler
+from legacy_sentiment.processing.custom_entity_handler import CustomEntityHandler
+from legacy_sentiment.processing.mwe_handler import MWEHandler
+from legacy_sentiment.processing.regex_pattern_handler import RegexPatternHandler
 from legacy_sentiment.utils.stopword_handler import StopwordHandler
-from semantic_role_handler import SemanticRoleHandler
-from aspect_handler import AspectHandler
+from legacy_sentiment.nlp.semantic_role_handler import SemanticRoleHandler
+from legacy_sentiment.utils.aspect_handler import AspectHandler
 from legacy_sentiment.processing.text_cleaner import TextCleaner
 from legacy_sentiment.processing.token_processor import TokenProcessor
 from legacy_sentiment.data_models.data_types import EntityToken

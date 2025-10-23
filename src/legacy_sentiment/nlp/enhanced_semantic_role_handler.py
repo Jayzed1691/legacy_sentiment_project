@@ -14,16 +14,10 @@ from legacy_sentiment.data_models.data_types import (
         SemanticComplex,
         Token,
 )
-try:
-        from legacy_sentiment.processing.unified_matcher_refactored import (
-                get_excluded_positions,
-                is_position_excluded,
-        )
-except ImportError:  # pragma: no cover - legacy fallback
-        from superceded.unified_matcher_refactored import (  # type: ignore
-                get_excluded_positions,
-                is_position_excluded,
-        )
+from legacy_sentiment.processing.unified_matcher_refactored import (
+        get_excluded_positions,
+        is_position_excluded,
+)
 
 # Configure the logger
 logging.basicConfig(level=logging.DEBUG)

@@ -17,10 +17,10 @@ from legacy_sentiment.utils.custom_file_utils import (
         load_multi_word_entries,
         load_regex_patterns,
 )
-from custom_entity_handler import CustomEntityHandler
-from mwe_handler import MWEHandler
-from regex_pattern_handler import RegexPatternHandler
-from spacy_handler import SpaCyHandler
+from legacy_sentiment.processing.custom_entity_handler import CustomEntityHandler
+from legacy_sentiment.processing.mwe_handler import MWEHandler
+from legacy_sentiment.processing.regex_pattern_handler import RegexPatternHandler
+from legacy_sentiment.nlp.spacy_handler import SpaCyHandler
 from legacy_sentiment.utils.stopword_handler import StopwordHandler
 from legacy_sentiment.processing.text_cleaner import TextCleaner
 from legacy_sentiment.processing.token_processor import TokenProcessor
